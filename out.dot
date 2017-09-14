@@ -103,9 +103,9 @@ digraph dirGraph{
 	do;
 	this;
 	nation->might[label="1"];
-	nation->conceived[label="1"];
-	nation->so[label="1"];
-	nation->or[label="1"];
+	nation->conceived[label = "2"];
+	nation->so[color=blue,label="1"];
+	nation->or[color=yellow,label="1"];
 	ago->our[label="1"];
 	seven->years[label="1"];
 	do->this[label="1"];
@@ -113,10 +113,10 @@ digraph dirGraph{
 	score->and[label="1"];
 	that->nation[label="2"];
 	that->that[label="1"];
-	that->all[label="1"];
+	that->all[color=blue,label="1"];
 	that->field[label="1"];
-	that->we[label="1"];
-	that->war[label="1"];
+	that->we[color=blue,label="1"];
+	that->war[color=blue,label="1"];
 	whether->that[label="1"];
 	should->do[label="1"];
 	those->who[label="1"];
@@ -124,8 +124,8 @@ digraph dirGraph{
 	new->nation[label="1"];
 	dedicated->can[label="1"];
 	dedicated->to[label="1"];
-	lives->that[label="1"];
 	in->Liberty[label="1"];
+	lives->that[label="1"];
 	in->a[label="1"];
 	created->equal[label="1"];
 	might->live[label="1"];

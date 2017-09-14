@@ -1,5 +1,10 @@
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class GraphGenerate {
     private final static int bufSize = 1024;
     private static int numOfwords = 1024;
@@ -187,7 +192,53 @@ public class GraphGenerate {
         result += tempArray[tempArray.length - 1] + ".";
         return result;
     }
-    public static String calcShortestPath(String word1, String word2){//计算两个单词之间的最短路径,展示还没写
+    public static void clearMarked(String route,String color){
+        Reader reader = null;
+        int tempchars;
+        String tempBuf = "";
+        String[] array = route.split("->");
+        try {
+            // 一次读多个字符
+            reader = new InputStreamReader(new FileInputStream("out.dot"));
+            // 读入多个字符到字符数组中，charread为一次读取字符数
+            int flag = 0;
+            while ((tempchars = reader.read()) != -1) {
+                tempBuf += (char) tempchars;
+            }
+        } catch (Exception e1) {
+            System.out.println(e1);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                    System.out.println(e1);
+                }
+            }
+        }
+        for(int i = 0;i <array.length - 1;i++){
+            String pattern = array[i] + "->" + array[i + 1]+"\\[color="+ color + ",";
+            System.out.println(pattern);
+            Pattern p = Pattern.compile(pattern);
+            Matcher m = p.matcher(tempBuf);
+            System.out.println(m);
+            tempBuf = m.replaceFirst(array[i]+"->" + array[i+1] + "\\[");
+        }
+        Writer output = null;
+        try {
+            output = new OutputStreamWriter(new FileOutputStream(path + "out.dot"));
+            output.write(tempBuf);
+            output.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static String calcShortestPath(String word1, String word2,String color) {
+        String res = ShortestPath(word1,word2,color);
+        clearMarked(res,color);
+        return res;
+    }
+    private static String ShortestPath(String word1, String word2,String color){//计算两个单词之间的最短路径
         int[] formerPath = new int[numOfwords];
         int []latterPath = new int[numOfwords];
         int indexSrc = (int)m.get(word1);
@@ -238,15 +289,70 @@ public class GraphGenerate {
         }
         result += word2;
         System.out.println(result);
+        Reader reader = null;
+        int tempchars;
+        String tempBuf = "";
+        try {
+            // 一次读多个字符
+            reader = new InputStreamReader(new FileInputStream("out.dot"));
+            // 读入多个字符到字符数组中，charread为一次读取字符数
+            int flag = 0;
+            while ((tempchars = reader.read()) != -1) {
+                tempBuf += (char) tempchars;
+            }
+        } catch (Exception e1) {
+            System.out.println(e1);
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                    System.out.println(e1);
+                }
+            }
+        }
+        String[] tempArry = result.split("->");
+        for(int i = 0;i < tempArry.length - 1;i++){
+            String pattern = tempArry[i] + "->" + tempArry[i + 1]+"\\[";
+            System.out.println(pattern);
+            Pattern p = Pattern.compile(pattern);
+            Matcher m = p.matcher(tempBuf);
+            System.out.println(m);
+            tempBuf = m.replaceFirst(tempArry[i]+"->" + tempArry[i+1] + "[color="+color+",");
+        }
+        Writer output = null;
+        try {
+            output = new OutputStreamWriter(new FileOutputStream(path + "out.dot"));
+            output.write(tempBuf);
+            output.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        System.out.println( "the shortest length from "+word1+" to " + word2  +" is :" + minRouteMatrix[indexSrc][indexDest]);
         return result;
     }
     public static String[] calcShortestPath(String word) {
         String[] result = new String[numOfwords];
         int index = 0;
+        Random random = new java.util.Random();
+        String[] stringChoice = {"red","yellow","green","blue"};
+        String[] color = new String[numOfwords];
         for(Object s:m.keySet()){
             if ((String)s != word){
-                result[index++] = calcShortestPath(word,(String)s);
+                int rand = random.nextInt(stringChoice.length);
+                String c = stringChoice[rand];
+                result[index] = ShortestPath(word,(String)s,c);
+                color[index++]  = c;
             }
+        }
+        try {
+            String[] cmd = {"cmd.exe", "/C", "start " + libPath + "dot " + path + "out.dot -T png -o " + path + "out.png"};
+            Runtime.getRuntime().exec(cmd);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        for(int i = 0;i<  result.length;i++){
+            clearMarked(result[i],color[i]);
         }
         return result;
     }
@@ -309,8 +415,8 @@ public class GraphGenerate {
         //showDirectedGraph(procBuf);
         //queryBridgeWords("natio","any",0);
         //System.out.println(generateNewText("final place those who gave"));
-        //calcShortestPath("lives","war");
-        System.out.println(randomWalk());
+        //System.out.println(calcShortestPath("lives"));
+        //System.out.println(randomWalk());
     }
 }
 
