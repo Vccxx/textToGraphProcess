@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+//change B2
 public class GraphTest  {
     final static int bufSize = 1024;
     static String buf = "";
