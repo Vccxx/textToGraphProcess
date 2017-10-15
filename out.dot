@@ -1,5 +1,16 @@
 digraph dirGraph{
+<<<<<<< HEAD
 	Four;
+=======
+	asdfssfdghjkl;
+	sdfsdsadsdasgsdg;
+	banana;
+	c;
+	a;
+	apple;
+	c;
+	four;
+>>>>>>> gaodeLab
 	score;
 	and;
 	seven;
@@ -37,6 +48,7 @@ digraph dirGraph{
 	a;
 	great;
 	civil;
+<<<<<<< HEAD
 	war;
 	testing;
 	whether;
@@ -201,4 +213,50 @@ digraph dirGraph{
 	to->the[label="1"];
 	to->dedicate[label="1"];
 	fitting->and[label="1"];
+=======
+	continent->a[label="1"];
+	engaged->in[label="1"];
+	fathers->brought[label="1"];
+	brought->forth[label="1"];
+	nation->conceived[label="1"];
+	conceived->in[label="1"];
+	ago->our[label="1"];
+	seven->years[label="1"];
+	sdfsdsadsdasgsdg->banana[label="1"];
+	Liberty->and[label="1"];
+	our->fathers[label="1"];
+	years->ago[label="1"];
+	we->are[label="1"];
+	apple->c[label="1"];
+	score->and[label="1"];
+	that->all[label="1"];
+	asdfssfdghjkl->sdfsdsadsdasgsdg[label="1"];
+	are->engaged[label="1"];
+	are->created[label="1"];
+	four->score[label="1"];
+	and->seven[label="1"];
+	and->dedicated[label="1"];
+	proposition->that[label="1"];
+	men->are[label="1"];
+	on->this[label="1"];
+	banana->c[label="1"];
+	all->men[label="1"];
+	a->apple[label="1"];
+	a->new[label="1"];
+	a->great[label="1"];
+	new->nation[label="1"];
+	dedicated->to[label="1"];
+	c->four[label="1"];
+	c->a[label="1"];
+	in->Liberty[label="1"];
+	in->a[label="1"];
+	created->equal[label="1"];
+	this->continent[label="1"];
+	forth->on[label="1"];
+	great->civil[label="1"];
+	the->proposition[label="1"];
+	equal->Now[label="1"];
+	Now->we[label="1"];
+	to->the[label="1"];
+>>>>>>> gaodeLab
 }
