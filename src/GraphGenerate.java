@@ -11,9 +11,9 @@ public class GraphGenerate {
     private static String buf = "";
     private static String path = "./";
     private static String libPath = "./bin/";
-    private static int[][] graphOfWords = new int[bufSize][bufSize];
+    public static int[][] graphOfWords = new int[bufSize][bufSize];
     private static int INF = 1000000000;
-    private static Map m = new HashMap();
+    private static Map m ;
     private static int[][] minRouteMatrix = new int[bufSize][bufSize];
     private static int[][] pathMatrix = new int[bufSize][bufSize];
     private static void Floyd() {
@@ -77,25 +77,16 @@ public class GraphGenerate {
             }
         }
     }
-    public String[] queryBridgeWords(String word1,String word2,int opt){//查询桥接词
+    public String queryBridgeWords(String word1,String word2){//查询桥接词
         String[] bridgeWords = new String[numOfwords];
         if(!(m.containsKey(word1) || m.containsKey(word2))){
-            if(opt == 0){
-                System.out.println("No " + word1 + " and " + word2 + " in the graph!");
-            }
-            return null;
+            return "No " + word1 + " and " + word2 + " in the graph!";
         }
         if(!(m.containsKey(word1) )){
-            if(opt == 0){
-                System.out.println("No "+ word1 + " in the graph!");
-            }
-            return null;
+            return "No "+ word1 + " in the graph!";
         }
         if(!(m.containsKey(word2))){
-            if(opt == 0){
-                System.out.println("No "+ word2 + " in the graph!");
-            }
-            return null;
+        	return "No "+ word2 + " in the graph!";
         }
         int index = 0;
         int src = (int)m.get(word1);
@@ -110,19 +101,15 @@ public class GraphGenerate {
             }
         }
         if(index == 0){
-            if(opt == 0){
-                System.out.println("No bridge words from "+word1+" to "+word2+"!");
-            }
-            return null;
+        	 return "No bridge words from "+word1+" to "+word2+"!";
         }
-        if(opt == 0){
-            System.out.print("The bridge words from \""+ word1+"\" to \""+ word2 +"\" are: ");
-            for(int i = 0;i < index - 1;i++){
-                System.out.print(bridgeWords[i] + ",");
-            }
-            System.out.println(bridgeWords[index - 1] + ".");
+            //System.out.print("The bridge words from \""+ word1+"\" to \""+ word2 +"\" are: ");
+        String result = "";
+        for(int i = 0;i < index - 1;i++){
+        	result+=bridgeWords[i] + ",";
         }
-        return bridgeWords;
+        result += bridgeWords[index - 1] + ".";
+        return result;
     }
     public int showDirectedGraph(String[] proc) {//展示有向图
         Writer output = null;
@@ -235,7 +222,7 @@ public class GraphGenerate {
     }
     public static String calcShortestPath(String word1, String word2,String color) {
         String res = ShortestPath(word1,word2,color);
-        clearMarked(res,color);
+        //clearMarked(res,color);
         return res;
     }
     private static String ShortestPath(String word1, String word2,String color){//计算两个单词之间的最短路径
@@ -409,14 +396,21 @@ public class GraphGenerate {
         Floyd();//使用Floyd算法在程序读入文本后计算出最短路径，以便之后的功能使用
     }
     public static void main(String[] args) {
-        String buf = ReadFile("test.txt");
+        String buf = ReadFile("/home/vccxx1337/Desktop/myPorj/lab6/textToGraphProcess/src/test.txt");
+        System.out.print(buf);
         String[] procBuf = buf.split(" ");
         init(procBuf);
         //showDirectedGraph(procBuf);
         //queryBridgeWords("natio","any",0);
         //System.out.println(generateNewText("final place those who gave"));
-        //System.out.println(calcShortestPath("lives"));
+        System.out.println(calcShortestPath("you", "are", "red"));
         //System.out.println(randomWalk());
+    }
+    GraphGenerate(){
+    	m = new HashMap();
+        String buf = ReadFile("test.txt");
+        String[] procBuf = buf.split(" ");
+        init(procBuf);
     }
 }
 
